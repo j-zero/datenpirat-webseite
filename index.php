@@ -46,7 +46,7 @@ else{   // dynamic page not found
 <html>
 <head>
     <title><?php echo "d@tenpir.at - $title"; ?></title>
-    <link rel="stylesheet" href="include/dark.css">
+    <link rel="stylesheet" href="/include/dark.css">
 </head>
 <body>
 <div class="sidebar">
@@ -57,11 +57,17 @@ else{   // dynamic page not found
             $text = $value["basename"];
             $link = $value["link"];
             $time = $value["time"];
-            echo "<a href=\"$link\">$text</a>\n";
-            echo "<span class=\"nav_time\">" . date ("d.m.Y H:i:s", $time) . "</span>\n";
+            if($request === $link)
+                echo "<a class=\"active\" href=\"$link\">$text</a>\n";
+            else
+                echo "<a href=\"/$link\">$text</a>\n";
+            echo "<span class=\"nav_time\">" . date ("d.m.Y H:i", $time) . "</span>\n";
         }
     ?>
-    <a id="impressum" href="impressum">Impressum</a>
+    <div class="static">
+        <a href="impressum">Impressum</a>
+        <a href="datenschutz">Datenschutz</a>
+    </div>
 </div>
 <div class="content">
     <?php echo $content; ?>
@@ -76,8 +82,8 @@ function list_files($path, $filter){
         if(!starts_with($file,'.') && ends_with($file,$filter)){
             $basename = basename($file, $filter);
             $link = format_link($basename);
-            $mtime = filemtime("$path/$file");
-            $list[$mtime . ',' . $link] = array("file"=>$file,"basename"=>$basename,"link"=>$link,"time"=>$mtime);
+            $time = filemtime("$path/$file");
+            $list[$time . ',' . $link] = array("file"=>$file,"basename"=>$basename,"link"=>$link,"time"=>$time);
         }
     }
     closedir($dir);
