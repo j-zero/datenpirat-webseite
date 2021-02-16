@@ -1,0 +1,219 @@
+body{
+    margin: 0 auto;
+    background: #06090f;
+    font-family: Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+    /* font-family: "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace; */
+    color: #c1c9d9;
+    line-height: 1;
+    padding: 0;
+}
+
+#impressum {
+    position: absolute;
+    bottom: 16px;
+    color: #30363d;
+}
+
+.red {
+    color: #f84149;
+}
+
+.monospace {
+    font-family: "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
+}
+
+.logo {
+
+    margin: 8px;
+    padding-left: 16px;
+    padding-bottom: 16px;
+    padding-top: 8px;
+    font-size: 1.4em;
+    border-bottom: 1px solid #30363d;
+    color: rgba(240,246,252,0.7);
+}
+
+.logo a {
+    display: inline !important;
+    color: rgba(240,246,252,0.7)  !important;
+    padding-left: 0 !important;
+}
+
+.logo a:hover{
+    text-decoration: none;
+}
+
+.nav{
+    display: block;
+    padding-left: 16px;
+    text-decoration: none;
+    margin-left: 8px;
+    padding-top: 8px;
+    padding-bottom: 4px;
+    font-size: 1.1em;
+  }
+
+.nav_time {
+    font-size: 0.6em;
+    padding-left: 24px;
+    color: #c1c9d9;
+    padding-bottom: 8px;
+}
+
+
+
+/* The side navigation menu */
+.sidebar {
+    background: #0d1117; 
+    border-right: 1px solid #30363d;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+
+  }
+
+/* Sidebar links */
+.sidebar a{
+    display: block;
+    padding-left: 24px;
+    padding-top: 8px;
+    text-decoration: none;
+  }
+  
+  /* Active/current link */
+  .sidebar a.active {
+
+  }
+  
+  /* Links on mouse-over */
+  .sidebar a:hover:not(.active) {
+
+  }
+
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+div.content {
+    margin-left: 232px;
+    padding: 1px 16px;
+  }
+
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+    .sidebar a {float: left;}
+    div.content {margin-left: 0;}
+  }
+  
+  /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+  @media screen and (max-width: 400px) {
+    .sidebar a {
+      text-align: center;
+      float: none;
+    }
+  }
+
+h1, h2, h3, h4 {
+    font-weight: 400;
+}
+h1, h2, h3, h4, h5 {
+    rgba(240,246,252,0.7);
+    margin-bottom: 24px;
+    padding: 0;
+}
+h1 {
+    font-size: 48px;
+}
+h2 {
+    font-size: 36px;
+    margin: 24px 0 6px;
+}
+h3 {
+    font-size: 24px;
+}
+h4 {
+    font-size: 21px;
+}
+h5 {
+    font-size: 18px;
+}
+a {
+    color: #58a6ff;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    vertical-align: baseline;
+}
+a:hover {
+    text-decoration: underline;
+}
+a:visited {
+    color: #58a6ff;
+}
+ul, ol {
+    margin: 0;
+}
+li {
+    line-height: 24px;
+}
+li ul, li ul {
+    margin-left: 24px;
+}
+p, ul, ol {
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 800px;
+}
+pre {
+    padding: 8px 8px;
+    max-width: 800px;
+    white-space: pre-wrap;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+}
+code {
+    font-family: Consolas, Monaco, Andale Mono, monospace;
+    line-height: 1.5;
+    font-size: 13px;
+    background: #0d1117;
+
+}
+aside {
+    display: block;
+    float: right;
+    width: 390px;
+}
+blockquote {
+    border-left:.5em solid #eee;
+    padding: 0 2em;
+    margin-left:0;
+    max-width: 476px;
+}
+blockquote  cite {
+    font-size:14px;
+    line-height:20px;
+    color:#bfbfbf;
+}
+blockquote cite:before {
+    content: '\2014 \00A0';
+}
+
+blockquote p {  
+    color: #666;
+    max-width: 460px;
+}
+hr {
+    width: 540px;
+    text-align: left;
+    margin: 0 auto 0 0;
+    color: #999;
+}
+
