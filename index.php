@@ -1,10 +1,10 @@
 <?php
 require_once("include/parsedown/Parsedown.php");
-/*
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-*/
+
 ?>
 <?php
 $content_folder = "./content";  // content folder
@@ -50,23 +50,24 @@ else{   // dynamic page not found
 </head>
 <body>
 <div class="sidebar">
-    <p class="logo monospace"><a href="/">d<span class="red">@</span>tenpir<span class="red">.</span>at</a></p>
-    <span class="nav">Posts</span>
+    <div class="logo typewriter">
+        <div class="typewriter-text"><a href="/">d<span class="red">@</span>tenpir<span class="red">.</span>at</a></div>
+    </div>
+    
     <?php 
         foreach ($pages as $key => $value){
             $text = $value["basename"];
             $link = $value["link"];
             $time = $value["time"];
-            if($request === $link)
-                echo "<a class=\"active\" href=\"$link\">$text</a>\n";
-            else
-                echo "<a href=\"/$link\">$text</a>\n";
+            echo "<a " . ($request == $link ? "class=\"active\"" : "") . " href=\"$link\">$text</a>\n";
             echo "<span class=\"nav_time\">" . date ("d.m.Y H:i", $time) . "</span>\n";
         }
     ?>
     <div class="static">
-        <a href="impressum">Impressum</a>
-        <a href="datenschutz">Datenschutz</a>
+        <?php 
+            echo "<a " . ($request == "datenschutz" ? "class=\"active\"" : "") . "href=\"datenschutz\">Datenschutz</a>\n";
+            echo "<a " . ($request == "impressum" ? "class=\"active\"" : "") . "href=\"impressum\">Impressum</a>\n";
+        ?>
     </div>
 </div>
 <div class="content">
