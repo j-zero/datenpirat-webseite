@@ -4,24 +4,42 @@ require_once("include/parsedown/Parsedown.php");
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
+//echo "<!--" . $_SERVER['HTTP_HOST'] . "-->";
+if(isset($_SERVER['HTTP_REFERER']))
+    echo "<!--" . $_SERVER['HTTP_REFERER'] . "-->";
 ?>
 <?php
+
 $content_folder = "./content";  // content folder
 $request = "hello-world";       // init page, keep empty for the last post
+$title = "d@tenpir.at";
+$theme = "haxx0r";
 
 $content = "";
-$title = "";
+
 $id = 0;
+$is_welcome_page = false;
+$is_first_visit = true;
+if(isset($_SERVER['HTTP_REFERER']))
+    $is_first_visit = !preg_match("/https?:\/\/" . $_SERVER['HTTP_HOST'] . "/i",$_SERVER['HTTP_REFERER']);
 
 $pages = list_files($content_folder,".md");
 $static_pages = list_files($content_folder . "/static/",".md");
 
+if(isset($_GET['theme']) && !empty($_GET['theme'])){
+    $tmp_theme = preg_replace('/[^A-Z\-a-z0-9_]+/', "", $_GET['theme']);
+    if(file_exists("./include/themes/$tmp_theme.css"))
+        $theme = $tmp_theme;
+}
+
 if(isset($_GET['p']) && !empty($_GET['p']))
     $request = format_link($_GET['p']);
+else
+    $is_welcome_page = true;
 
 if(!empty($request))
     $id = find_entry($pages,$request);
+
 
 if($id !== false){  // page found!
     $page = $pages[array_keys($pages)[$id]];
@@ -45,13 +63,15 @@ else{   // dynamic page not found
 <!doctype html>
 <html>
 <head>
-    <title><?php echo "d@tenpir.at - $title"; ?></title>
-    <link rel="stylesheet" href="/include/dark.css">
+    <title><?php echo "$title"; ?></title>
+    <link rel="stylesheet" href="/include/themes/<?php echo $theme; ?>.css">
+    <link rel="stylesheet" href="/include/default.css">
 </head>
 <body>
 <div class="sidebar">
     <div class="logo typewriter">
-        <div class="typewriter-text"><a href="/">d<span class="red">@</span>tenpir<span class="red">.</span>at</a></div>
+        <div class="typewriter-text <?php echo($is_welcome_page || $is_first_visit ? "typewriter-animation" : ""); ?>">
+        <a rel="keep-params" href="/">d<span class="accent">@</span>tenpir<span class="accent">.</span>at</a></div>
     </div>
     
     <?php 
@@ -59,14 +79,14 @@ else{   // dynamic page not found
             $text = $value["basename"];
             $link = $value["link"];
             $time = $value["time"];
-            echo "<a " . ($request == $link ? "class=\"active\"" : "") . " href=\"$link\">$text</a>\n";
+            echo "<a rel=\"keep-params\" " . ($request == $link ? "class=\"active\"" : "") . " href=\"$link\">$text</a>\n";
             echo "<span class=\"nav_time\">" . date ("d.m.Y H:i", $time) . "</span>\n";
         }
     ?>
     <div class="static">
         <?php 
-            echo "<a " . ($request == "datenschutz" ? "class=\"active\"" : "") . "href=\"datenschutz\">Datenschutz</a>\n";
-            echo "<a " . ($request == "impressum" ? "class=\"active\"" : "") . "href=\"impressum\">Impressum</a>\n";
+            echo "<a rel=\"keep-params\" " . ($request == "datenschutz" ? "class=\"active\"" : "") . "href=\"datenschutz\">Datenschutz</a>\n";
+            echo "<a rel=\"keep-params\" " . ($request == "impressum" ? "class=\"active\"" : "") . "href=\"impressum\">Impressum</a>\n";
         ?>
     </div>
 </div>
