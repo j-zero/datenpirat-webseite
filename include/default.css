@@ -1,0 +1,264 @@
+body{
+    margin: 0 auto;
+    /*background: #06090f;*/
+    background: var(--background1);
+    font-family: var(--font_default);
+    /* font-family: "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace; */
+    color:var(--text1);
+    line-height: 1;
+    padding: 0;
+}
+
+a {
+    color: var(--accent);
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    vertical-align: baseline;
+    
+}
+a:hover {
+    text-decoration: underline;
+}
+a:visited {
+   
+}
+
+.sidebar {
+    /* background: #0d1117; */
+    background: var(--background2); 
+    border-right: 1px solid var(--borders);
+    margin: 0;
+    padding: 0;
+    width: 220px;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+
+}
+
+.sidebar a{
+    display: block;
+    padding-left: 24px;
+    padding-top: 8px;
+    text-decoration: none;
+    color: var(--text2);
+    transition: color 0.3s ease;
+}
+
+.sidebar a.active {
+    color: var(--accent);
+}
+
+.sidebar a:hover:not(.active) {
+    color: var(--accent);
+    text-decoration: none !important;
+}
+
+.sidebar a:hover {
+    color: var(--accent);
+    text-decoration: none !important;
+}
+
+.static {
+    position: absolute;
+    bottom: 16px;
+}
+
+.static a {
+    color: var(--text2);
+    transition: color 0.3s ease;
+}
+
+.static a.active {
+    color: var(--accent) !important;
+}
+
+.static a:hover {
+    color: var(--accent);
+    text-decoration: none !important;
+}
+
+.accent {
+    color: var(--accent);
+}
+
+.monospace {
+    font-family: var(--font_monospace);
+}
+
+.logo {
+    margin: 8px 16px 8px 24px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    font-size: 1.4em;
+    border-bottom: 1px solid var(--borders);
+    color:var(--text1);
+}
+
+.logo a {
+    display: inline !important;
+    color: var(--text1)  !important;
+    padding-left: 0 !important;
+}
+
+.logo a:hover{
+    text-decoration: none;
+}
+
+.nav{
+    display: block;
+    padding-left: 16px;
+    text-decoration: none;
+    margin-left: 8px;
+    padding-top: 8px;
+    padding-bottom: 4px;
+    font-size: 1.2em;
+    margin: 8px;
+
+  }
+
+.nav_time {
+    font-size: 0.7em;
+    padding-left: 24px;
+    color: var(--text2);
+    padding-bottom: 8px;
+}
+
+div.content {
+    margin-left: 232px;
+    padding: 1px 16px;
+    max-width: 800px;
+  }
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 6px;
+    background-color: var(--borders);
+}
+
+h1, h2, h3, h4 {
+    font-weight: 400;
+}
+h1, h2, h3, h4, h5 {
+    color: var(--text1);
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--borders);
+    max-width: 800px;
+}
+h1 {
+    font-size: 48px;
+}
+h2 {
+    font-size: 36px;
+    margin: 24px 0 6px;
+}
+h3 {
+    font-size: 24px;
+}
+h4 {
+    font-size: 21px;
+}
+h5 {
+    font-size: 18px;
+}
+
+ul, ol {
+    margin: 0;
+}
+li {
+    line-height: 24px;
+}
+li ul, li ul {
+    margin-left: 24px;
+}
+p, ul, ol {
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 800px;
+}
+pre {
+    padding: 8px 8px;
+    max-width: 784px;
+    white-space: pre-wrap;
+    background: var(--background2);
+    border: 1px solid var(--background2);
+    border-radius: 6px;
+}
+code {
+    font-family: var(--font_code);
+    line-height: 1.5;
+    font-size: 13px;
+    background: var(--background2);
+
+}
+aside {
+    display: block;
+    float: right;
+    width: 390px;
+}
+blockquote {
+    border-left:.5em solid var(--background2);
+    padding: 0 2em;
+    margin-left:0;
+    max-width: 476px;
+}
+blockquote  cite {
+    font-size:14px;
+    line-height:20px;
+    color:#bfbfbf;
+}
+blockquote cite:before {
+    content: '\2014 \00A0';
+}
+
+blockquote p {  
+    color: #666;
+    max-width: 460px;
+}
+hr {
+    width: 540px;
+    text-align: left;
+    margin: 0 auto 0 0;
+    color: #999;
+}
+
+
+/* Animtations */
+.typewriter
+{
+    font-family: var(--font_logo);
+	display: inline-block;
+}
+
+.typewriter-text {
+    display: inline-block;
+  	overflow: hidden;
+  	letter-spacing: 2px;
+    white-space: nowrap;
+    box-sizing: border-box;
+    border-right: 2px solid transparent;
+}
+.typewriter-animation {
+    animation: typing 1s steps(11, end), blink 0.5s step-end 2;
+}
+
+@keyframes typing {
+    from { 
+        width: 0%;
+    }
+    to { 
+        width: 100%;
+    }
+}
+@keyframes blink {
+    from, to { 
+       border-color: transparent;
+    }
+    50% { 
+        border-color:var(--red); 
+    }
+}

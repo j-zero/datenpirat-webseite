@@ -1,0 +1,13 @@
+:root {
+    --accent: #56f841;
+    --text1: #c9d1d9;
+    --text2: #4d545c;
+    --text3: #fff;
+    --background1: #0d1117;
+    --background2:#161b22;  
+    --borders:#30363d;
+    --font_default: "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
+    --font_monospace: "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
+    --font_code: "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
+    --font_logo: "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
+  }
