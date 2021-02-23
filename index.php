@@ -104,8 +104,13 @@ function list_files($path, $filter){
     while($file = readdir($dir)){
         if(!starts_with($file,'.') && ends_with($file,$filter)){
             $basename = basename($file, $filter);
+            $cache_file = "$path/cache/" . basename($file). ".cache";
             $link = format_link($basename);
             $time = filemtime("$path/$file");
+
+            if(file_exists($cache_file))
+                $time = filemtime($cache_file);
+            
             $list[$time . ',' . $link] = array(
                 "file"=>$file,
                 "basename"=>$basename,
@@ -136,20 +141,26 @@ function find_entry($haystack, $needle ){
 function parse_md_file($file){
     $text = file_get_contents($file);
     if(preg_match("/^\[softlink\]\((.*)\)$/",$text, $matches, PREG_UNMATCHED_AS_NULL)) {
+        $url = $matches[1];
         $basename = basename($file);
         $cache_file = "./content/cache/$basename.cache" ;
         if(file_exists($cache_file)) {
             if(time() - filemtime($cache_file) > 86400) {
                 // too old , re-fetch
-                $cache = file_get_contents($matches[1]);
+                $cache = file_get_contents($url);
+                $dt = get_last_commit_time_from_github_api($url);
                 file_put_contents($cache_file, $cache);
+                touch($cache_file,$dt);
             } else {
                 $cache = file_get_contents($cache_file);
             }
         } else {
             // no cache, create one
-            $cache = file_get_contents($matches[1]);
+            $cache = file_get_contents($url);
+            $dt = get_last_commit_time_from_github_api($url);
+            
             file_put_contents($cache_file, $cache);
+            touch($cache_file,$dt);
         }
 
         $text = $cache;
@@ -158,6 +169,27 @@ function parse_md_file($file){
         ->setMarkupEscaped(true) # safe mode
         ->setBreaksEnabled(true) # enables automatic line breaks
         ->text($text); 
+}
+
+function get_last_commit_time_from_github_api($url){
+    
+    preg_match("/^(.*:\/\/).*?\/(?<user>.*?)\/(?<repo>.*?)\/(?<branch>.*?)\/(?<path>.*?)$/",$url,$m);
+    //var_dump($m);
+    $user = $m["user"];
+    $repo = $m["repo"];
+    $path = $m["path"];
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_USERAGENT, "datenpir.at-browser"); 
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    $url = "https://api.github.com/repos/$user/$repo/commits?path=$path";
+    curl_setopt($ch, CURLOPT_URL, $url);
+    $response = curl_exec($ch);
+    $commits = json_decode($response, true);
+    curl_close($ch);
+    $last_commit = $commits[0]["commit"]["committer"]["date"];
+    return DateTime::createFromFormat('Y-m-d\TH:i:s+', $last_commit)->format('U');
 }
 
 
