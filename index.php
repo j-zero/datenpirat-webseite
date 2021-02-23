@@ -181,12 +181,13 @@ function get_last_commit_time_from_github_api($url){
     $user = $m["user"];
     $repo = $m["repo"];
     $path = $m["path"];
+    $branch = $m["branch"];
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_USERAGENT, "datenpir.at-browser"); 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    $url = "https://api.github.com/repos/$user/$repo/commits?path=$path";
+    $url = "https://api.github.com/repos/$user/$repo/commits?path=$path&sha=$branch";
     curl_setopt($ch, CURLOPT_URL, $url);
     $response = curl_exec($ch);
     $commits = json_decode($response, true);
