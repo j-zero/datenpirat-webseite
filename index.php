@@ -1,25 +1,24 @@
 <?php
 require_once("include/parsedown/Parsedown.php");
-
+/*
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 //echo "<!--" . $_SERVER['HTTP_HOST'] . "-->";
 if(isset($_SERVER['HTTP_REFERER']))
     echo "<!--" . $_SERVER['HTTP_REFERER'] . "-->";
-?>
-<?php
 
+*/
 $content_folder = "./content";  // content folder
 $request = "hello-world";       // init page, keep empty for the last post
 $title = "d@tenpir.at";
 $theme = "haxx0r";
 
 $content = "";
-
 $id = 0;
 $is_welcome_page = false;
 $is_first_visit = true;
+
 if(isset($_SERVER['HTTP_REFERER']))
     $is_first_visit = !preg_match("/https?:\/\/" . $_SERVER['HTTP_HOST'] . "/i",$_SERVER['HTTP_REFERER']);
 
@@ -39,7 +38,6 @@ else
 
 if(!empty($request))
     $id = find_entry($pages,$request);
-
 
 if($id !== false){  // page found!
     $page = $pages[array_keys($pages)[$id]];
@@ -73,25 +71,24 @@ else{   // dynamic page not found
         <div class="typewriter-text <?php echo($is_welcome_page || $is_first_visit ? "typewriter-animation" : ""); ?>">
         <a rel="keep-params" href="/">d<span class="accent">@</span>tenpir<span class="accent">.</span>at</a></div>
     </div>
-    
-    <?php 
-        foreach ($pages as $key => $value){
-            $text = $value["basename"];
-            $link = $value["link"];
-            $time = $value["time"];
-            echo "<a rel=\"keep-params\" " . ($request == $link ? "class=\"active\"" : "") . " href=\"$link\">$text</a>\n";
-            echo "<span class=\"nav_time\">" . date ("d.m.Y H:i", $time) . "</span>\n";
-        }
-    ?>
+<?php 
+    foreach ($pages as $key => $value){
+        $text = $value["basename"];
+        $link = $value["link"];
+        $time = $value["time"];
+        echo "\t\t<a rel=\"keep-params\" " . ($request == $link ? "class=\"active\"" : "") . " href=\"/$link\">$text</a>\n";
+        echo "\t\t<span class=\"nav_time\">" . date ("d.m.Y H:i", $time) . "</span>\n";
+    }
+?>
     <div class="static">
-        <?php 
-            echo "<a rel=\"keep-params\" " . ($request == "datenschutz" ? "class=\"active\"" : "") . "href=\"datenschutz\">Datenschutz</a>\n";
-            echo "<a rel=\"keep-params\" " . ($request == "impressum" ? "class=\"active\"" : "") . "href=\"impressum\">Impressum</a>\n";
-        ?>
+<?php 
+        echo "\t\t<a rel=\"keep-params\" " . ($request == "datenschutz" ? "class=\"active\"" : "") . "href=\"datenschutz\">Datenschutz</a>\n";
+        echo "\t\t<a rel=\"keep-params\" " . ($request == "impressum" ? "class=\"active\"" : "") . "href=\"impressum\">Impressum</a>\n";
+?>
     </div>
 </div>
 <div class="content">
-    <?php echo $content; ?>
+<?php echo $content; ?>
 </div>
 </body>
 </html>
@@ -120,7 +117,7 @@ function ends_with( $haystack, $needle ){
 }
 function format_link( $s ){
     $result = preg_replace("/\s+/", "-", strtolower($s));
-    $result = preg_replace('/[^A-Z\-a-z_]+/', "", $result);
+    $result = preg_replace('/[^A-Z\-a-z0-9_]+/', "", $result);
     return $result;
 }
 function find_entry($haystack, $needle ){

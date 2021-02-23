@@ -33,8 +33,8 @@ a:visited {
     width: 220px;
     position: fixed;
     height: 100%;
-    overflow: auto;
-
+    overflow: hidden;
+    font-family: var(--font_sidebar);
 }
 
 .sidebar a{
@@ -42,7 +42,7 @@ a:visited {
     padding-left: 24px;
     padding-top: 8px;
     text-decoration: none;
-    color: var(--text2);
+    color: var(--text1);
     transition: color 0.3s ease;
 }
 
@@ -232,6 +232,7 @@ hr {
 {
     font-family: var(--font_logo);
 	display: inline-block;
+    /*animation: glitch 5s 5s infinite, glitch-2 5s 5s infinite;*/
 }
 
 .typewriter-text {
@@ -243,7 +244,7 @@ hr {
     border-right: 2px solid transparent;
 }
 .typewriter-animation {
-    animation: typing 1s steps(11, end), blink 0.5s step-end 2;
+    animation: typing 1s steps(11, end), cursor 0.5s step-end 2;
 }
 
 @keyframes typing {
@@ -254,11 +255,28 @@ hr {
         width: 100%;
     }
 }
-@keyframes blink {
+@keyframes cursor {
     from, to { 
        border-color: transparent;
     }
     50% { 
-        border-color:var(--red); 
+        border-color:var(--accent); 
     }
 }
+@keyframes glitch {
+    1%{
+      transform: rotateX(10deg) skewX(90deg);
+    }
+    2%{
+      transform: rotateX(0deg) skewX(0deg);
+    }
+  }
+
+  @keyframes glitch-2 {
+    1%{
+      transform: rotateX(-30deg) skewX(70deg);
+    }
+    2%{
+      transform: rotateX(0deg) skewX(0deg);
+    }
+  }
