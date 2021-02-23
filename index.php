@@ -140,15 +140,17 @@ function find_entry($haystack, $needle ){
 }
 function parse_md_file($file){
     $text = file_get_contents($file);
-    if(preg_match("/^\[softlink\]\((.*)\)$/",$text, $matches, PREG_UNMATCHED_AS_NULL)) {
-        $url = $matches[1];
+    if(preg_match("/^\[(github|softlink)\]\((.*)\)$/",$text, $matches, PREG_UNMATCHED_AS_NULL)) {
+        $type = $matches[1];
+        $url = $matches[2];
         $basename = basename($file);
         $cache_file = "./content/cache/$basename.cache" ;
         if(file_exists($cache_file)) {
             if(time() - filemtime($cache_file) > 86400) {
                 // too old , re-fetch
                 $cache = file_get_contents($url);
-                $dt = get_last_commit_time_from_github_api($url);
+                if($type === "github")
+                    $dt = get_last_commit_time_from_github_api($url);
                 file_put_contents($cache_file, $cache);
                 touch($cache_file,$dt);
             } else {
@@ -157,7 +159,8 @@ function parse_md_file($file){
         } else {
             // no cache, create one
             $cache = file_get_contents($url);
-            $dt = get_last_commit_time_from_github_api($url);
+            if($type === "github")
+                $dt = get_last_commit_time_from_github_api($url);
             
             file_put_contents($cache_file, $cache);
             touch($cache_file,$dt);
