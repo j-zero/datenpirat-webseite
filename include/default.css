@@ -146,15 +146,16 @@ h1, h2, h3, h4, h5 {
     color: var(--text1);
     margin-bottom: 24px;
     padding-bottom: 8px;
-    border-bottom: 1px solid var(--borders);
     max-width: 800px;
 }
 h1 {
     font-size: 48px;
+    border-bottom: 1px solid var(--borders);
 }
 h2 {
     font-size: 36px;
     margin: 24px 0 6px;
+    border-bottom: 1px solid var(--borders);
 }
 h3 {
     font-size: 24px;

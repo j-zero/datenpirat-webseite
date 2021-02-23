@@ -1,9 +1,14 @@
 <?php
+//header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+//header("Cache-Control: post-check=0, pre-check=0", false);
+//header("Pragma: no-cache");
+
 require_once("include/parsedown/Parsedown.php");
-/*
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+/*
 //echo "<!--" . $_SERVER['HTTP_HOST'] . "-->";
 if(isset($_SERVER['HTTP_REFERER']))
     echo "<!--" . $_SERVER['HTTP_REFERER'] . "-->";
@@ -39,22 +44,22 @@ else
 if(!empty($request))
     $id = find_entry($pages,$request);
 
-if($id !== false){  // page found!
+if($id !== false){  // dynamic page found!
     $page = $pages[array_keys($pages)[$id]];
     $file = $page['file'];
     $title = htmlentities($page['basename']);
-    $content = parse_file("$content_folder/$file");
+    $content = parse_md_file("$content_folder/$file");
 }
 else{   // dynamic page not found
     $static_id = find_entry($static_pages,$request);
     if($static_id !== false){  // static page found!
         $page = $static_pages[array_keys($static_pages)[$static_id]];
         $file = $page['file'];
-        $content = parse_file("$content_folder/static/$file");
+        $content = parse_md_file("$content_folder/static/$file");
     }
     else{
         http_response_code(404);
-        $content = parse_file($content_folder . "/static/404.md");
+        $content = parse_md_file($content_folder . "/static/404.md");
     }
 }
 ?>
@@ -101,7 +106,12 @@ function list_files($path, $filter){
             $basename = basename($file, $filter);
             $link = format_link($basename);
             $time = filemtime("$path/$file");
-            $list[$time . ',' . $link] = array("file"=>$file,"basename"=>$basename,"link"=>$link,"time"=>$time);
+            $list[$time . ',' . $link] = array(
+                "file"=>$file,
+                "basename"=>$basename,
+                "link"=>$link,
+                "time"=>$time
+            );
         }
     }
     closedir($dir);
@@ -123,10 +133,33 @@ function format_link( $s ){
 function find_entry($haystack, $needle ){
     return array_search( $needle, array_column($haystack, "link"));
 }
-function parse_file($file){
+function parse_md_file($file){
     $text = file_get_contents($file);
+    if(preg_match("/^\[softlink\]\((.*)\)$/",$text, $matches, PREG_UNMATCHED_AS_NULL)) {
+        $basename = basename($file);
+        $cache_file = "./content/cache/$basename.cache" ;
+        if(file_exists($cache_file)) {
+            if(time() - filemtime($cache_file) > 86400) {
+                // too old , re-fetch
+                $cache = file_get_contents($matches[1]);
+                file_put_contents($cache_file, $cache);
+            } else {
+                $cache = file_get_contents($cache_file);
+            }
+        } else {
+            // no cache, create one
+            $cache = file_get_contents($matches[1]);
+            file_put_contents($cache_file, $cache);
+        }
+
+        $text = $cache;
+    }
     return Parsedown::instance()
+        ->setMarkupEscaped(true) # safe mode
         ->setBreaksEnabled(true) # enables automatic line breaks
         ->text($text); 
 }
+
+
+
 ?>
