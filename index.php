@@ -121,6 +121,9 @@ function list_files($path, $filter){
     }
     closedir($dir);
     krsort($list);
+    echo "<!--\n";
+    var_dump($list);
+    echo "-->\n";
     return $list;
 }
 
