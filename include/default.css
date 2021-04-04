@@ -238,7 +238,6 @@ hr {
 
 .typewriter-text {
     display: inline-block;
-  	overflow: hidden;
   	letter-spacing: 2px;
     white-space: nowrap;
     box-sizing: border-box;
