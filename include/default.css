@@ -5,7 +5,7 @@ body{
     font-family: var(--font_default);
     /* font-family: "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace; */
     color:var(--text1);
-    line-height: 1;
+    /*line-height: 1;*/
     padding: 0;
 }
 
@@ -26,6 +26,7 @@ a:visited {
 
 .sidebar {
     /* background: #0d1117; */
+
     background: var(--background2); 
     border-right: 1px solid var(--borders);
     margin: 0;
@@ -33,20 +34,65 @@ a:visited {
     width: 220px;
     position: fixed;
     height: 100%;
-    overflow: hidden;
+    /*overflow-x: hidden;*/
+    max-height: 100%;
     font-family: var(--font_sidebar);
+    min-height: 600px;
+}
+
+.sidebar .menu_link{
+    padding-left: 8px;
+    padding-bottom: 8px;
+    /*font-size: 0.9em;*/
+    margin-left: 24px;
+    line-height: 1;
 }
 
 .sidebar a{
     display: block;
-    padding-left: 24px;
     padding-top: 8px;
     text-decoration: none;
     color: var(--text1);
     transition: color 0.3s ease;
 }
 
-.sidebar a.active {
+.sidebar span.category{
+    display: block;
+    padding-left: 8px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    margin: 8px 16px 0px 24px;
+    text-decoration: none;
+    color: var(--text1);
+    transition: color 0.3s ease;
+    border-bottom: 1px solid var(--borders);
+    font-size: 1.2em;
+}
+
+.sidebar div.active {
+    color: var(--accent);
+    background-color:  var(--background1);
+    margin-right: -2px;
+    margin-top: -1px;
+    border-right:  1px solid  var(--background1);
+    border-left:   1px solid var(--borders);
+    border-bottom: 1px solid var(--borders);
+    border-top:    1px solid var(--borders);
+    
+}
+
+.sidebar div.inactive {
+   
+    
+    margin-right: -2px;
+    margin-top: -1px;
+    border-right:  1px solid transparent;
+    border-left:   1px solid transparent;
+    border-bottom: 1px solid transparent;
+    border-top:    1px solid transparent;
+}
+
+.sidebar div.active a{
     color: var(--accent);
 }
 
@@ -63,11 +109,17 @@ a:visited {
 .static {
     position: absolute;
     bottom: 16px;
+    padding-left: 8px;
+    padding-bottom: 3px;
+    font-size: 0.9em;
+    margin-left: 24px;
 }
 
 .static a {
     color: var(--text2);
     transition: color 0.3s ease;
+    display: block;
+    padding-top: 8px;
 }
 
 .static a.active {
@@ -88,6 +140,7 @@ a:visited {
 }
 
 .logo {
+
     margin: 8px 16px 8px 24px;
     padding-bottom: 8px;
     padding-top: 8px;
@@ -119,16 +172,15 @@ a:visited {
   }
 
 .nav_time {
-    font-size: 0.7em;
-    padding-left: 24px;
+    font-size: 0.8em;
     color: var(--text2);
-    padding-bottom: 8px;
 }
 
 div.content {
     margin-left: 232px;
     padding: 1px 16px;
     max-width: 800px;
+    line-height: 1;
   }
 
 img {
@@ -148,6 +200,7 @@ h1, h2, h3, h4, h5 {
     padding-bottom: 8px;
     max-width: 800px;
 }
+
 h1 {
     font-size: 48px;
     border-bottom: 1px solid var(--borders);
@@ -202,10 +255,11 @@ aside {
     width: 390px;
 }
 blockquote {
-    border-left:.5em solid var(--background2);
+    border-left:1px solid var(--accent);
     padding: 0 2em;
     margin-left:0;
-    max-width: 476px;
+    font-style:italic;
+    /*max-width: 476px;*/
 }
 blockquote  cite {
     font-size:14px;
@@ -227,21 +281,22 @@ hr {
     color: #999;
 }
 
-
 /* Animtations */
 .typewriter
 {
     font-family: var(--font_logo);
 	display: inline-block;
-    /*animation: glitch 5s 5s infinite, glitch-2 5s 5s infinite;*/
+    animation: glitch 5s 5s infinite, glitch-2 5s 5s infinite;
 }
 
 .typewriter-text {
+    overflow-x: hidden;
     display: inline-block;
   	letter-spacing: 2px;
     white-space: nowrap;
     box-sizing: border-box;
     border-right: 2px solid transparent;
+    
 }
 .typewriter-animation {
     animation: typing 1s steps(11, end), cursor 0.5s step-end 2;
